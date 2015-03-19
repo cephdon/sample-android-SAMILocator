@@ -1,7 +1,5 @@
-SAMI WebSockets & geolocation app
-===========================
-
-This sample Android app was created to demonstrate how to send geolocation data using [SAMI WebSockets](https://developer.samsungsami.io/sami/sami-documentation/sending-and-receiving-data.html). It also demonstrates how to watch for the location in real time using the same or other devices, and how to get and display on a map the locations in historical mode.
+# SAMI sample app SamiLocator
+This sample Android app demonstrates how to send geolocation data using [SAMI WebSockets](https://developer.samsungsami.io/sami/sami-documentation/sending-and-receiving-data.html). It also illustrates how to watch for the location in real time using the same or other devices, and how to get and display on a map the locations in historical mode.
 
 Introduction
 -------------
