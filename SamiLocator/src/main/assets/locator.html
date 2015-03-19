@@ -1,0 +1,65 @@
+<html>
+    <head>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <style type="text/css">
+            html { height: 100% }
+            body { height: 100%; margin: 0; padding: 0 }
+            #map_canvas { height: 100% }
+        </style>
+        <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.1.min.js"></script>
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=&sensor=false"></script>
+        <script type="text/javascript">
+        // Here we use the interface provided by java code to get SAMI configuration
+        var sdid = window.jsinterface.getDeviceId();
+        var accessToken = window.jsinterface.getAccessToken();
+
+        // Query SAMI API for the latest 100 places sent by the app's device
+        function getMessagesLast(){
+            $.ajax({
+                url: "https://api.samsungsami.io/v1.1/messages/last?sdids="+sdid+"&count=100",
+                dataType: 'json',
+                type: "GET",
+                beforeSend: function(xhr){
+                    xhr.setRequestHeader('Authorization', 'bearer '+accessToken);
+                    xhr.setRequestHeader('Content-type', 'application/json');
+                },
+                success: function(result) {
+                    var legs = [];
+                    $.each( result.data, function( index ) {
+                        var latLng = result.data[index].data;
+                        legs.push(new google.maps.LatLng(latLng.lat, latLng.lng));
+                    });
+                    initialize(legs);
+                }
+            });
+        }
+
+        // Init the map using as center the first point returned by SAMI
+        function initialize(legs) {
+            var mapProp = {
+                center: legs[0],
+                zoom: 18,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+
+            var map=new google.maps.Map(document.getElementById("map_canvas"),mapProp);
+
+            var devicePath=new google.maps.Polyline({
+                path:legs,
+                strokeColor:"#0000FF",
+                strokeOpacity:0.8,
+                strokeWeight:2
+            });
+            devicePath.setMap(map);
+        }
+
+        // Code starts here
+        $(document).ready(function() {
+            getMessagesLast();
+        });
+        </script>
+    </head>
+    <body>
+        <div id="map_canvas" style="width:100%; height:100%"></div>
+    </body>
+</html>

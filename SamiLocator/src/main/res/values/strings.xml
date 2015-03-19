@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">SamiLocator</string>
+    <string name="notification">Service running</string>
+    <string name="action_settings">Settings</string>
+    <string name="show_last_location">Where is this?</string>
+    <string name="show_path">Where have I been?</string>
+    <string name="configure">Application is not configured. Please set the device ID and access token.</string>
+
+</resources>
